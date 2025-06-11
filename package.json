@@ -1,0 +1,19 @@
+{
+  "name": "in_memory_cache_system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cache.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async-mutex": "^0.5.0"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "mocha": "^11.6.0"
+  }
+}

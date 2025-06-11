@@ -1,0 +1,113 @@
+# 🧠 Thread-Safe LRU Cache with TTL in Node.js
+
+This project implements a **thread-safe in-memory Least Recently Used (LRU) cache** with support for:
+
+- ✅ Time-to-Live (TTL) expiration
+- ✅ Automatic cleanup of expired entries
+- ✅ LRU eviction policy
+- ✅ Real-time statistics tracking
+- ✅ Thread-safe operations using `async-mutex`
+
+---
+
+## 📁 Files Overview
+
+- **`cache.js`**: Core implementation of the LRU cache.
+- **`testCache.js`**: Demonstrates how to use the cache (put, get, TTL test, eviction, stats).
+
+---
+
+## 📦 Dependencies
+
+Install via npm:
+
+```bash
+npm install async-mutex
+```
+
+🚀 How to Run the Code
+Follow the steps below to test the LRU Cache in your terminal:
+
+1. Clone or copy the project files:
+   bash
+   Copy
+   Edit
+   git clone <your-repo-url>
+   cd your-project
+2. Install required packages:
+   bash
+   Copy
+   Edit
+   npm install async-mutex
+3. Run the demonstration:
+   bash
+   Copy
+   Edit
+   node testCache.js
+   You will see output like:
+
+bash
+Copy
+Edit
+DB Host: localhost:5432
+Missing Key: null
+Temp Data (after 3 sec): null
+Cache Stats: {
+hits: 1,
+misses: 2,
+evictions: 200,
+expired_removals: 1,
+total_requests: 3,
+hit_rate: 0.3333,
+current_size: 1000
+}
+
+⚙️ Design Decisions
+✅ Map + Doubly Linked List for O(1) get, put, and delete.
+
+⏱ TTL expiration managed per entry with timestamps.
+
+🧹 Background cleanup interval (every 1 second) to remove expired keys.
+
+📊 Stat tracking for performance evaluation.
+
+🧪 Custom TTL override supported on a per-entry basis.
+
+🧵 Concurrency Model
+Mutex locking ensures thread-safe access to the cache during get, put, delete, and clear operations.
+
+Prevents race conditions and guarantees data consistency in concurrent environments.
+
+🔁 Eviction Logic
+If the number of cached entries exceeds maxSize:
+
+The least recently used (tail) node is evicted.
+
+The node is removed from both the doubly linked list and the Map.
+
+The evictions counter is incremented in the statistics.
+
+📊 Sample Statistics Output
+json
+Copy
+Edit
+{
+"hits": 1,
+"misses": 2,
+"evictions": 200,
+"expired_removals": 1,
+"total_requests": 3,
+"hit_rate": 0.3333,
+"current_size": 1000
+}
+⚡ Performance Considerations
+All operations (get, put, delete) operate in O(1) time complexity.
+
+TTL cleanup runs periodically (every second) to prevent stale entries.
+
+Best suited for small to medium-scale caching; for large-scale distributed systems consider using Redis or Memcached.
+
+Avoid blocking long operations within the mutex lock to maintain performance.
+
+📬 Contact & License
+This project is provided for educational and demonstration purposes. Feel free to modify or extend it for production-grade systems.
